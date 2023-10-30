@@ -2,20 +2,93 @@
 <html>
   <head>
     <title>Simple HTML Table</title>
+    <style>
+      .right-column {
+        width: 300px; /* Adjust the width as needed */
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: #f0f0f0; /* Background color for the column */
+        padding: 10px; /* Add some padding to the content inside the column */
+      }
+    </style>
   </head>
   <body>
+    <h2>Overall Spending</h2>
+
     <table border="1">
       <tr>
         <th>Date Purchased</th>
         <th>Purchase Name</th>
+        <th>Category</th>
         <th>Amount Spent</th>
         <th>Current Balance</th>
       </tr>
       <tr>
         <td>10/25/2023</td>
         <td>Candy Bar</td>
+        <td>Food/Drink</td>
         <td>$1.50</td>
         <td>$32.75</td>
+      </tr>
+      <tr>
+        <td>10/26/2023</td>
+        <td>Toy Car</td>
+        <td>Toys</td>
+        <td>$10</td>
+        <td>$22.75</td>
+      </tr>
+      <tr>
+        <td>10/27/2023</td>
+        <td>Soda</td>
+        <td>Food/Drink</td>
+        <td>$0.75</td>
+        <td>$32</td>
+      </tr>
+    </table>
+
+    <table border="1">
+      <h2>Food Budget</h2>
+      <tr>
+        <th>Date Purchased</th>
+        <th>Purchase Name</th>
+        <th>Amount Spent</th>
+        <th>Budget Left</th>
+      </tr>
+      <tr>
+        <td>10/1/2023</td>
+        <td>Starting Budget</td>
+        <td></td>
+        <td>$10</td>
+      </tr>
+      <tr>
+        <td>10/25/2023</td>
+        <td>Candy Bar</td>
+        <td>$1.50</td>
+        <td>$8.50</td>
+      </tr>
+      <tr>
+        <td>10/27/2023</td>
+        <td>Soda</td>
+        <td>$0.75</td>
+        <td>$7.75</td>
+      </tr>
+    </table>
+    <button>Add purchase</button>
+
+    <h2>Toy Budget</h2>
+    <table border="1">
+      <tr>
+        <th>Date Purchased</th>
+        <th>Purchase Name</th>
+        <th>Amount Spent</th>
+        <th>Budget Left</th>
+      </tr>
+      <tr>
+        <td>10/1/2023</td>
+        <td>Starting Budget</td>
+        <td></td>
+        <td>$10</td>
       </tr>
       <tr>
         <td>10/26/2023</td>
@@ -23,12 +96,26 @@
         <td>$10</td>
         <td>$22.75</td>
       </tr>
-      <tr>
-        <td>10/27/2023</td>
-        <td>Soda</td>
-        <td>$0.75</td>
-        <td>$32</td>
-      </tr>
     </table>
+    <button>Add purchase</button>
+
+    <div class="right-column">
+      <!-- Content for the right column goes here -->
+      <h2>Tasks</h2>
+      <ul>
+        <li>Make your bed</li>
+        <ul>
+          <li>$1</li>
+        </ul>
+        <li>Help make dinner</li>
+        <ul>
+          <li>$3</li>
+        </ul>
+        <li>Vacuum the stairs</li>
+        <ul>
+          <li>$10</li>
+        </ul>
+      </ul>
+    </div>
   </body>
 </html>
