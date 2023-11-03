@@ -1,0 +1,19 @@
+{% comment %} // Retrieve input values from the form
+        const transactionID = document.getElementById("TransactionID").value;
+        const transactionDate =
+          document.getElementById("TransactionDate").value;
+        const transactionCategory = document.getElementById(
+          "TransactionCategory"
+        ).value;
+        const transactionName =
+          document.getElementById("TransactionName").value;
+        const transactionPrice =
+          document.getElementById("TransactionPrice").value; {% endcomment %}
+
+
+          // Clear input values after adding the row
+          document.getElementById("TransactionID").value = "";
+          document.getElementById("TransactionDate").value = "";
+          document.getElementById("TransactionCategory").value = "";
+          document.getElementById("TransactionName").value = "";
+          document.getElementById("TransactionPrice").value = "";

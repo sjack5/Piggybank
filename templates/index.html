@@ -1,121 +1,113 @@
-<!DOCTYPE html>
 <html>
   <head>
-    <title>Simple HTML Table</title>
+    <title>Piggy Bank</title>
     <style>
-      .right-column {
-        width: 300px; /* Adjust the width as needed */
-        position: fixed;
-        top: 0;
-        right: 0;
-        background-color: #f0f0f0; /* Background color for the column */
-        padding: 10px; /* Add some padding to the content inside the column */
+      table {
+        border-collapse: collapse;
+        width: 50%;
+      }
+
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
       }
     </style>
   </head>
   <body>
     <h2>Overall Spending</h2>
-
     <table border="1">
       <tr>
-        <th>Date Purchased</th>
-        <th>Purchase Name</th>
+        <th>ID</th>
+        <th>Date</th>
         <th>Category</th>
-        <th>Amount Spent</th>
-        <th>Current Balance</th>
+        <th>Name</th>
+        <th>Price</th>
+        <!-- Add more table headers for additional columns -->
       </tr>
+      {% for row in data %}
       <tr>
-        <td>10/25/2023</td>
-        <td>Candy Bar</td>
-        <td>Food/Drink</td>
-        <td>$1.50</td>
-        <td>$32.75</td>
+        <td>{{ row[0] }}</td>
+        <td>{{ row[1] }}</td>
+        <td>{{ row[2] }}</td>
+        <td>{{ row[3] }}</td>
+        <td>{{ row[4] }}</td>
+        <!-- Add more table cells for additional columns -->
       </tr>
-      <tr>
-        <td>10/26/2023</td>
-        <td>Toy Car</td>
-        <td>Toys</td>
-        <td>$10</td>
-        <td>$22.75</td>
-      </tr>
-      <tr>
-        <td>10/27/2023</td>
-        <td>Soda</td>
-        <td>Food/Drink</td>
-        <td>$0.75</td>
-        <td>$32</td>
-      </tr>
+      {% endfor %}
     </table>
+    <button id="addRowButton">Add Row</button>
 
-    <table border="1">
-      <h2>Food Budget</h2>
-      <tr>
-        <th>Date Purchased</th>
-        <th>Purchase Name</th>
-        <th>Amount Spent</th>
-        <th>Budget Left</th>
-      </tr>
-      <tr>
-        <td>10/1/2023</td>
-        <td>Starting Budget</td>
-        <td></td>
-        <td>$10</td>
-      </tr>
-      <tr>
-        <td>10/25/2023</td>
-        <td>Candy Bar</td>
-        <td>$1.50</td>
-        <td>$8.50</td>
-      </tr>
-      <tr>
-        <td>10/27/2023</td>
-        <td>Soda</td>
-        <td>$0.75</td>
-        <td>$7.75</td>
-      </tr>
-    </table>
-    <button>Add purchase</button>
+    <form id="addRowForm" style="display: none" method="POST" action="/add_row">
+      <input type="text" name="TransactionID" placeholder="Column 1" />
+      <input type="text" name="TransactionDate" placeholder="Column 2" />
+      <input type="text" name="TransactionCategory" placeholder="Column 3" />
+      <input type="text" name="TransactionName" placeholder="Column 4" />
+      <input type="text" name="TransactionPrice" placeholder="Column 5" />
+      <!-- Add more input fields for additional columns -->
+      <button type="submit">Add</button>
+    </form>
 
-    <h2>Toy Budget</h2>
-    <table border="1">
-      <tr>
-        <th>Date Purchased</th>
-        <th>Purchase Name</th>
-        <th>Amount Spent</th>
-        <th>Budget Left</th>
-      </tr>
-      <tr>
-        <td>10/1/2023</td>
-        <td>Starting Budget</td>
-        <td></td>
-        <td>$10</td>
-      </tr>
-      <tr>
-        <td>10/26/2023</td>
-        <td>Toy Car</td>
-        <td>$10</td>
-        <td>$22.75</td>
-      </tr>
-    </table>
-    <button>Add purchase</button>
+    <script>
+      // Get references to form and button
+      const addRowForm = document.getElementById("addRowForm");
+      const addRowButton = document.getElementById("addRowButton");
 
-    <div class="right-column">
-      <!-- Content for the right column goes here -->
-      <h2>Tasks</h2>
-      <ul>
-        <li>Make your bed</li>
-        <ul>
-          <li>$1</li>
-        </ul>
-        <li>Help make dinner</li>
-        <ul>
-          <li>$3</li>
-        </ul>
-        <li>Vacuum the stairs</li>
-        <ul>
-          <li>$10</li>
-        </ul>
-      </ul>
-    </div>
+      addRowButton.addEventListener("click", function () {
+        // Show the form
+        addRowForm.style.display = "block";
+      });
+
+      addRowForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const formData = new FormData(addRowForm);
+
+        fetch("/add_row", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+
+            window.location.reload();
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+
+        // Create a new row in the table and add the input values
+        const table = document.querySelector("table");
+        const newRow = table.insertRow(-1); // -1 appends the row at the end of the table
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+        const cell4 = newRow.insertCell(3);
+        const cell5 = newRow.insertCell(4);
+        cell1.textContent = formData.get("transactionID").value;
+        cell2.textContent = formData.get("transactionDate").value;
+        cell3.textContent = formData.get("transactionCategory").value;
+        cell4.textContent = formData.get("transactionName").value;
+        cell5.textContent = formData.get("transactionPrice").value;
+
+        addRowForm.reset();
+
+        // Hide the form after adding the row
+        addRowForm.style.display = "none";
+
+        // You need to send the data to your server and update the database here
+        // This code will not update a database as it is client-side only
+      });
+
+      addRowForm.addEventListener("submit", function (event) {
+        location.reload();
+      });
+    </script>
   </body>
 </html>
