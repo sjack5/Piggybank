@@ -2,9 +2,27 @@
   <head>
     <title>Piggy Bank</title>
     <style>
+      body {
+        background-color: #87ceeb;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh; /* Set a minimum height to prevent it from taking the full height */
+        margin: 0;
+      }
+
+      .table-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+      }
+
       table {
         border-collapse: collapse;
-        width: 50%;
+        width: 100%;
+        text-align: center;
       }
 
       th,
@@ -12,43 +30,93 @@
         border: 1px solid #dddddd;
         text-align: left;
         padding: 8px;
+        font-family: "Fredoka One", cursive;
+      }
+
+      tr:nth-child(odd) {
+        background-color: #ffffff;
       }
 
       tr:nth-child(even) {
         background-color: #f2f2f2;
       }
+
+      #addRowButton {
+        background-color: #4caf50; /* Green background color */
+        color: white; /* White text color */
+        border: none; /* No border */
+        padding: 10px 20px; /* Padding around text */
+        text-align: center; /* Center the text */
+        text-decoration: none; /* Remove underlines for links */
+        display: inline-block; /* Display as a block element */
+        font-size: 16px; /* Font size */
+        border-radius: 4px; /* Rounded corners */
+        cursor: pointer; /* Change mouse cursor on hover */
+        margin-top: 10px;
+      }
+
+      #addRowButton:hover {
+        background-color: #45a049; /* Darker green on hover */
+      }
+
+      #addRowForm input {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+
+      #addRowForm button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      #addRowForm button:hover {
+        background-color: #45a049;
+      }
     </style>
   </head>
   <body>
-    <h2>Overall Spending</h2>
-    <table border="1">
-      <tr>
-        <th>ID</th>
-        <th>Date</th>
-        <th>Category</th>
-        <th>Name</th>
-        <th>Price</th>
-        <!-- Add more table headers for additional columns -->
-      </tr>
-      {% for row in data %}
-      <tr>
-        <td>{{ row[0] }}</td>
-        <td>{{ row[1] }}</td>
-        <td>{{ row[2] }}</td>
-        <td>{{ row[3] }}</td>
-        <td>{{ row[4] }}</td>
-        <!-- Add more table cells for additional columns -->
-      </tr>
-      {% endfor %}
-    </table>
+    <h2 style="font-family: 'Fredoka One', cursive">Overall Spending</h2>
+    <div class="table-container">
+      <table border="1">
+        <tr>
+          <th>ID</th>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Name</th>
+          <th>Price</th>
+          <!-- Add more table headers for additional columns -->
+        </tr>
+        {% for row in data %}
+        <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>{{ row[4] }}</td>
+          <!-- Add more table cells for additional columns -->
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
     <button id="addRowButton">Add Row</button>
 
     <form id="addRowForm" style="display: none" method="POST" action="/add_row">
-      <input type="text" name="TransactionID" placeholder="Column 1" />
-      <input type="text" name="TransactionDate" placeholder="Column 2" />
-      <input type="text" name="TransactionCategory" placeholder="Column 3" />
-      <input type="text" name="TransactionName" placeholder="Column 4" />
-      <input type="text" name="TransactionPrice" placeholder="Column 5" />
+      <input type="text" name="TransactionID" placeholder="ID" />
+      <input type="text" name="TransactionDate" placeholder="Date" />
+      <input type="text" name="TransactionCategory" placeholder="Category" />
+      <input type="text" name="TransactionName" placeholder="Name" />
+      <input type="text" name="TransactionPrice" placeholder="Price" />
       <!-- Add more input fields for additional columns -->
       <button type="submit">Add</button>
     </form>
@@ -59,8 +127,12 @@
       const addRowButton = document.getElementById("addRowButton");
 
       addRowButton.addEventListener("click", function () {
-        // Show the form
-        addRowForm.style.display = "block";
+        // Toggle the form's display when the button is clicked
+        if (addRowForm.style.display === "none") {
+          addRowForm.style.display = "block";
+        } else {
+          addRowForm.style.display = "none";
+        }
       });
 
       addRowForm.addEventListener("submit", function (event) {
